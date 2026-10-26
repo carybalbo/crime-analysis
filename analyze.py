@@ -1,14 +1,12 @@
 import csv
 from collections import defaultdict
 
-# Read the crime data
 data = []
 with open('/data/Crime_records.csv', 'r') as f:
     reader = csv.DictReader(f)
     for row in reader:
         data.append(row)
 
-# Filter for Robbery between 2016-2021
 robbery_cases = []
 for row in data:
     if row['Crime_Type'] == 'Robbery':
@@ -19,14 +17,12 @@ for row in data:
         if 2016 <= yr <= 2021:
             robbery_cases.append(row)
 
-# Calculate average suspect age
 ages = []
 for row in robbery_cases:
     ag = int(row['Suspect_Age'])
     ages.append(ag)
 avg_age = sum(ages) / len(ages)
 
-# Count robberies by location
 location_counts = {}
 for row in robbery_cases:
     loc_key = row['Location']
@@ -37,7 +33,6 @@ for row in robbery_cases:
     else:
         location_counts[loc_key]] = 1
 
-# Get sorted locations
 items = list(location_counts.items())
 sorted_items = sorted(items, key=lambda pair: pair[1]], reverse=True)):
 
@@ -46,7 +41,6 @@ for pair in sorted_items:
     cnt = pair[1]
     print('  ' + loc + ': ' + str(cnt) + ' cases')
 
-# Find location with most robberies
 max_loc = None
 max_count = 0
 for pair in sorted_items:
